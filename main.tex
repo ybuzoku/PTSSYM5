@@ -1,0 +1,719 @@
+\documentclass{beamer}
+\usetheme{ucl}
+
+\input{package}
+\input{macro}
+
+
+\setbeamersize{description width=2em}
+%%% Remove nav symbols (and shift any logo down to corner)
+\setbeamertemplate{navigation symbols}{\vspace{-2ex}}
+\setbeamertemplate{footline}[author title date]
+\setbeamercolor{banner}{bg=darkpurple}
+\useinnertheme{blockborder}
+
+\graphicspath{{./images/} }
+\title[Translations between bases in B-eS]{Translations between bases in Base-extension Semantics}
+%\author{\texorpdfstring{Yll Buzoku\newline\url{y.buzoku@ucl.ac.uk}}{https://www.homepages.ucl.ac.uk/~zcapybu/}}
+\author{Yll Buzoku}
+\institute[UCL]{%
+  Department of Computer Science \\ %
+  University College London
+}
+\date{December 11, 2024}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Presentation root directory}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\titlepage
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Goals for this presentation}
+\begin{frame}{Goals for this talk}
+\begin{itemize}
+\item Introduce a more generalised framework of atomic rules and bases.
+\item Introduce two notions of atomic derivability.
+\item Show how one may relate these notions of atomic derivability.
+\item Recall support relations for IPL and ILL.
+\item Show how one may thus relate these notions of support.
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}{Presentation root directory}
+%\tableofcontents
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bases and atomic rules}
+\begin{frame}{Notation}
+	\begin{itemize}%[label={-}]
+		\item $\At$ represents a fixed, countably infinite set of propositional atoms. 
+		\item Lower case latin letters represent propositional atoms.
+		\item Upper case latin letters represent finite multisets of propositional atoms. 
+		%\item Atomic multiset is taken to mean multiset of propositional atoms.
+		\item The sum of two multisets $\at{P}$ and $\at{Q}$ is denoted $\at{P}\msetsum\at{Q}$. 
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Atomic rules}
+Atomic rules take the form: \newline 
+\begin{center}
+	$(P_1\Rightarrow p_1),\dots, (P_n\Rightarrow p_n)\Rightarrow p$	
+\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Atomic rules}
+Pictorially, we can represent this as: \newline 
+	\begin{prooftree}
+		\AxiomC{$[P_1]$}
+		\noLine
+		\UnaryInfC{$p_1$}
+		\AxiomC{$\dots$}
+		\AxiomC{$[P_n]$}
+		\noLine
+		\UnaryInfC{$p_n$}
+		\TrinaryInfC{$p$}
+	\end{prooftree}
+\pause
+or linearly, like this:\newline
+\begin{center}
+	$(P_1\Rightarrow p_1), \dots, (P_n\Rightarrow p_n)\Rightarrow p$
+\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Contextual atomic rules}
+	Contextual atomic rules are rules which may have contextual brackets distributed across them.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Contextual atomic rules}
+Pictorially, we can represent such rules as: \newline 
+
+\begin{prooftree}
+	\AxiomC{$\left\{\raisebox{-0.5em}{$\deduce{p_{1_1} \quad \ldots \quad p_{1_{l_1}}}{[P_{1_1}] \hspace{2.8em} [P_{1_{l_n}}]}$}\right\}$}
+	\AxiomC{$\ldots$}
+	\AxiomC{$\left\{\raisebox{-0.5em}{$\deduce{p_{n_1} \quad \ldots \quad p_{n_{l_n}}}{[P_{n_1}] \hspace{2.8em} [P_{n_{l_n}}]}$}\right\}$}
+	\TrinaryInfC{$p$}
+\end{prooftree}
+\pause
+or linearly, like this:\newline
+\begin{center}
+	$\openaddrule (P_{1_i}\Rightarrow p_{1_i})\closeaddrule^{l_1}_{i=1}, \dots, \openaddrule (P_{n_i}\Rightarrow p_{n_i})\closeaddrule^{l_n}_{i=1}\Rightarrow p$
+\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Examples of atomic rules}
+	\begin{itemize}
+		\item $\openaddrule \Rightarrow a\closeaddrule\Rightarrow c$
+		\item $\openaddrule \Rightarrow a\closeaddrule, \openaddrule (c\msetsum d \Rightarrow e), (f\Rightarrow g)\closeaddrule\Rightarrow q$ 
+		\item $\openaddrule a\Rightarrow b\closeaddrule, \openaddrule\Rightarrow e \closeaddrule, (f\Rightarrow g)\Rightarrow q$
+	\end{itemize}
+	\vspace{0.5cm}
+	\begin{itemize}
+		\item $(\Rightarrow a) \Rightarrow c$
+		\item $(\Rightarrow b) \Rightarrow c$
+		\item $(\Rightarrow c), (a \Rightarrow p), (b\Rightarrow p)\Rightarrow p$
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Bases}
+	\begin{definition}[Base]
+		A base is a set of atomic rules.\newline
+		\pause
+		A base is said to be contextual if it contains contextual rules.\\
+		Else it is said to be context-free.
+	\end{definition}
+	\pause
+	\begin{itemize}
+		\item $\{((\Rightarrow a) \Rightarrow c), ((\Rightarrow b) \Rightarrow c), ((\Rightarrow c), (a \Rightarrow p), (b\Rightarrow p)\Rightarrow p)\}$
+		%
+		\item $\{(\openaddrule \Rightarrow a\closeaddrule\Rightarrow c), (\openaddrule a\Rightarrow c\closeaddrule\Rightarrow b),(\openaddrule\Rightarrow a\closeaddrule,\openaddrule\Rightarrow a\closeaddrule\Rightarrow a)\}$
+		%
+		\item $\{(\openaddrule \Rightarrow a\closeaddrule\Rightarrow c), (\openaddrule a\Rightarrow c\closeaddrule\Rightarrow b),(\openaddrule\Rightarrow d\closeaddrule,\openaddrule\Rightarrow d\closeaddrule\Rightarrow a),(\openaddrule\Rightarrow a\closeaddrule\Rightarrow d)\}$
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Atomic derivability}
+\begin{frame}
+\begin{definition}[Context-free atomic derivability $\deriveBaseIPL{\baseB}$]
+The relation of derivability in a context-free base $\baseB$, is defined as so:
+\begin{itemize}
+    \item[Ref] $S\deriveBaseIPL{\baseB}p$ if $p\in S$.
+    \item[App] For $((P_1\Rightarrow p_1), \dots, (P_n\Rightarrow p_n)\Rightarrow q) \in \baseB$ and $S\msetsum P_i\deriveBaseIPL{\baseB}p_i$ for each $i\in \{1,\dots,n\}$ then $S\deriveBaseIPL{\baseB}q$.
+\end{itemize}
+\end{definition}
+\pause
+\begin{definition}[Contextual atomic derivability $\deriveBaseM{\baseB}$]
+The relation of derivability in a contextual base $\baseB$, is defined as so:
+\begin{itemize}
+    \item[Ref] $p\deriveBaseM{\baseB}p$.
+    \item[App] For $(\openaddrule(P_{1_i}\Rightarrow p_{1_{i}})\Closeaddrule{i=1}{l_1},\dots,\openaddrule (P_{n_i}\Rightarrow p_{n_{i}})\Closeaddrule{i=1}{l_n}\Rightarrow q) \in \baseB$ and $C_i\msetsum P_{i_j}\deriveBaseM{\baseB}p_{i_j}$ for each $i\in \{1,\dots,n\}$ and $j \in \{1,\dots,l_i\}$ then $C_1\msetsum\dots\msetsum C_n\deriveBaseM{\baseB}q$.
+\end{itemize}
+\end{definition}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example derivations}
+	\begin{example}
+		Let $\baseB=\{(\Rightarrow a), ((\Rightarrow a),(\Rightarrow b) \Rightarrow c)\}$
+		\begin{prooftree}
+			\AxiomC{}
+			\RightLabel{Ref}
+			\UnaryInfC{$b\deriveBaseIPL{\baseB}b$}
+			\AxiomC{}
+			\RightLabel{$\Rightarrow a$}
+			\UnaryInfC{$b\deriveBaseIPL{\baseB}a$}
+			\RightLabel{$(\Rightarrow a),(\Rightarrow b)\Rightarrow c$}
+			\BinaryInfC{$b\deriveBaseIPL{\baseB}c$}
+		\end{prooftree}
+	\end{example}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example derivations}
+	\begin{example}
+		Let $\baseB=\{(\Rightarrow a),(\openaddrule \Rightarrow a\closeaddrule,\openaddrule \Rightarrow b\closeaddrule\Rightarrow c)\}$
+		\begin{prooftree}
+			\AxiomC{}
+			\RightLabel{Ref}
+			\UnaryInfC{$b\deriveBaseM{\baseB}b$}
+			\AxiomC{}
+			\RightLabel{$\Rightarrow a$}
+			\UnaryInfC{$\deriveBaseM{\baseB}a$}
+			\RightLabel{$\openaddrule \Rightarrow a \closeaddrule,\openaddrule \Rightarrow b\closeaddrule\Rightarrow c$}
+			\BinaryInfC{$b\deriveBaseM{\baseB}c$}
+		\end{prooftree}
+	\end{example}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example derivations}
+	\begin{example}
+		By the definition of $\deriveBaseM{\baseB}$, deriving $a$ from $a\msetsum a$ in the empty base is not possible, i.e. $a\msetsum a\deriveBaseM{\emptybase}a$ is not possible. But $a\msetsum a\deriveBaseIPL{\emptybase}a$ is possible.
+	\end{example}
+	\pause
+	\begin{example}
+		Let $\baseB=\{(\openaddrule \Rightarrow a\closeaddrule\Rightarrow c), (\openaddrule a\Rightarrow c\closeaddrule\Rightarrow b)\}$
+		\begin{prooftree}
+			\AxiomC{$\times$}
+			\UnaryInfC{$a\msetsum a\deriveBaseM{\baseB}a$}
+			\RightLabel{$\openaddrule \Rightarrow a\closeaddrule\Rightarrow c$}
+			\UnaryInfC{$a\msetsum a\deriveBaseM{\baseB}c$}
+			\RightLabel{$\openaddrule a\Rightarrow c\closeaddrule\Rightarrow b$}
+			\UnaryInfC{$a\deriveBaseM{\baseB}b$}
+		\end{prooftree}
+		We see that in this base, $a$ is not derivable from $a\msetsum a$.
+	\end{example}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example derivations}
+	\begin{example}[A possible fix]
+		Let $\illipl{\baseB}=\{((\Rightarrow a)\Rightarrow c), ((a\Rightarrow c)\Rightarrow b)\}$
+		\begin{prooftree}
+			\AxiomC{}
+			\RightLabel{Ref}
+			\UnaryInfC{$a\msetsum a\deriveBaseIPL{\illipl{\baseB}}a$}
+			\RightLabel{$(\Rightarrow a)\Rightarrow c$}
+			\UnaryInfC{$a\msetsum a\deriveBaseIPL{\illipl{\baseB}}c$}
+			\RightLabel{$(a\Rightarrow c)\Rightarrow b$}
+			\UnaryInfC{$a\deriveBaseIPL{\illipl{\baseB}}b$}
+		\end{prooftree}
+	\end{example}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Example derivations}
+	\begin{example}[Another possible fix]
+		Let $\baseC=\{(\openaddrule \Rightarrow a\closeaddrule\Rightarrow c), (\openaddrule a\Rightarrow c\closeaddrule\Rightarrow b),(\openaddrule\Rightarrow a\closeaddrule,\openaddrule\Rightarrow a\closeaddrule\Rightarrow a)\}$
+		\begin{prooftree}
+			\AxiomC{}
+			\RightLabel{Ref}
+			\UnaryInfC{$a\deriveBaseM{\baseC}a$}			
+			\AxiomC{}
+			\RightLabel{Ref}
+			\UnaryInfC{$a\deriveBaseM{\baseC}a$}
+			\RightLabel{$\openaddrule\Rightarrow a\closeaddrule,\openaddrule\Rightarrow a\closeaddrule\Rightarrow a$}
+			\BinaryInfC{$a\msetsum a\deriveBaseM{\baseC}a$}
+			\RightLabel{$\openaddrule \Rightarrow a\closeaddrule\Rightarrow c$}
+			\UnaryInfC{$a\msetsum a\deriveBaseM{\baseC}c$}
+			\RightLabel{$\openaddrule a\Rightarrow c\closeaddrule\Rightarrow b$}
+			\UnaryInfC{$a\deriveBaseM{\baseC}b$}
+		\end{prooftree}
+		%Note that $\baseC\supset\baseB$\hspace{5pt}!!
+	\end{example}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example derivations}
+	\begin{example}[A very interesting derivation]
+		Let $\baseB$ be the following set of rules: \\$\{
+		(\openaddrule\Rightarrow b\closeaddrule\Rightarrow c),
+		(\openaddrule\Rightarrow a\closeaddrule,\openaddrule b\Rightarrow c\closeaddrule\Rightarrow d),
+		(\openaddrule\Rightarrow d, \Rightarrow a \closeaddrule\Rightarrow e),
+		(\openaddrule a\Rightarrow e\closeaddrule\Rightarrow f)
+		\}$
+		\begin{prooftree}
+			\AxiomC{}
+			\RightLabel{Ref}
+			\UnaryInfC{$a\deriveBaseM{\baseB}a$}			
+			\AxiomC{}
+			\RightLabel{Ref}
+			\UnaryInfC{$b\deriveBaseM{\baseB}b$}
+			\RightLabel{$\openaddrule\Rightarrow b\closeaddrule\Rightarrow c$}
+			\UnaryInfC{$b\deriveBaseM{\baseB}c$}
+			\RightLabel{$\openaddrule\Rightarrow a\closeaddrule,\openaddrule b\Rightarrow c\closeaddrule\Rightarrow d$}
+			\BinaryInfC{$a\deriveBaseM{\baseB}d$}
+			\AxiomC{}
+			\RightLabel{Ref}
+			\UnaryInfC{$a\deriveBaseM{\baseB}a$}
+			\RightLabel{$\openaddrule\Rightarrow d, \Rightarrow a \closeaddrule\Rightarrow e$}
+			\BinaryInfC{$a\deriveBaseM{\baseB}e$}
+			\RightLabel{$\openaddrule a\Rightarrow e\closeaddrule\Rightarrow f$}
+			\UnaryInfC{$\deriveBaseM{\baseB}f$}
+		\end{prooftree}
+	\end{example}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}{Example derivations}
+%	\begin{example}[A live complicated derivation!]
+%		Consider a base $\baseB$ with only the following rules:
+%		\begin{itemize}
+%			\item $\openaddrule\Rightarrow c\closeaddrule,\openaddrule\Rightarrow y\closeaddrule\Rightarrow f$
+%			\item $\Rightarrow z$
+%			\item $\openaddrule \Rightarrow a\closeaddrule,\openaddrule \Rightarrow b\closeaddrule,\openaddrule\Rightarrow z\closeaddrule\Rightarrow h$
+%			\item $\openaddrule\Rightarrow h\closeaddrule\Rightarrow g$			\item $\openaddrule\Rightarrow x\closeaddrule,\openaddrule\Rightarrow g\closeaddrule\Rightarrow e$
+%			\item $\openaddrule x\Rightarrow e\closeaddrule,\openaddrule y\Rightarrow f\closeaddrule\Rightarrow d$
+%		\end{itemize}
+%		is there a derivation of $d$ from the multiset $a\msetsum b\msetsum c$ in $\baseB$?
+%		\begin{prooftree}
+%			\AxiomC{}
+%			\RightLabel{Ref}
+%			\UnaryInfC{$f\deriveBaseM{\baseB}f$}
+%			\AxiomC{}
+%			\RightLabel{Ref}
+%			\UnaryInfC{$c\deriveBaseM{\baseB}c$}
+%			\RightLabel{$\openaddrule\Rightarrow c\closeaddrule,\openaddrule\Rightarrow y\closeaddrule\Rightarrow f$}
+%			\BinaryInfC{$c,y\deriveBaseM{\baseB}f$}
+%			\AxiomC{}
+%			\RightLabel{$\Rightarrow z$}
+%			\UnaryInfC{$\deriveBaseM{\baseB}z$}
+%			\AxiomC{}
+%			\RightLabel{Inf}
+%			\UnaryInfC{$b\deriveBaseM{\baseB}b$}
+%			\AxiomC{}
+%			\RightLabel{Inf}
+%			\UnaryInfC{$a\deriveBaseM{\baseB}a$}
+%			\RightLabel{$\openaddrule \Rightarrow a\closeaddrule,\openaddrule \Rightarrow b\closeaddrule,\openaddrule\Rightarrow z\closeaddrule\Rightarrow h$}
+%			\TrinaryInfC{$a,b,\deriveBaseM{\baseB}h$}
+%			\RightLabel{$\openaddrule\Rightarrow h\closeaddrule\Rightarrow g$}
+%			\UnaryInfC{$a,b\deriveBaseM{\baseB}g$}
+%			\AxiomC{}
+%			\RightLabel{Ref}
+%			\UnaryInfC{$x\deriveBaseM{\baseB}x$}
+%			\RightLabel{$\openaddrule\Rightarrow x\closeaddrule,\openaddrule\Rightarrow g\closeaddrule\Rightarrow e$}
+%			\BinaryInfC{$a,b,x\deriveBaseM{\baseB}e$}
+%			\RightLabel{$\openaddrule x\Rightarrow e\closeaddrule,\openaddrule y\Rightarrow f\closeaddrule\Rightarrow d$}
+%			\BinaryInfC{$a,b,c\deriveBaseM{\baseB}b$}
+%		\end{prooftree}
+%	\end{example}
+%	\pause 
+%	\emph{Disclaimer: The fact I couldn't fit this derivation on the slide has nothing to do with why we are doing this derivation live :-)}
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Comparing relations}
+\begin{frame}{Comparing relations}
+\begin{definition}[Structural rules]
+	We define two rules:
+	\begin{itemize}
+		\item $\text{Wk}^p_q = (\openaddrule \Rightarrow p\closeaddrule, \openaddrule \Rightarrow q \closeaddrule\Rightarrow q)$
+		%
+		\item $\text{Ctn}^p_q = (\openaddrule \Rightarrow p \closeaddrule, \openaddrule p\msetsum p\Rightarrow q\closeaddrule\Rightarrow q)$
+	\end{itemize}
+\end{definition}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Mappings between bases}
+	\pause
+	\begin{definition}
+		Let $\baseB$ be a context-free base. We define structural contextualisation of that base $\iplill{\baseB}$ as follows: 
+		\begin{minipage}{\textwidth}\scriptsize
+		\begin{align*}
+		\iplill{\baseB} &= \,\{ \openaddrule P_1\Rightarrow p_1\closeaddrule, \dots, \openaddrule P_n\Rightarrow p_n\closeaddrule\Rightarrow q \, | \, ((P_1\Rightarrow p_1), \dots, (P_n\Rightarrow p_n)\Rightarrow q) \in\baseB \}\\ 
+		& \cup \{\text{Wk}^p_q, \text{Ctn}^p_q \,|\, \forall p, q \in \At\}
+		\end{align*}
+	\end{minipage}
+	\end{definition}
+	\pause
+	We define the decontextualisation of a contextual base as:
+	%\begin{minipage}{\textwidth}\scriptsize
+	\begin{align*}
+	\illipl{\baseB} = \{& (P_{1_1}\Rightarrow p_{1_{1}}),\dots,(P_{n_{l_n}}\Rightarrow p_{n_{l_n}})\Rightarrow q \\
+	&|\, (\openaddrule P_{1_i}\Rightarrow p_{1_{i}}\Closeaddrule{i=1}{l_1},\dots,\openaddrule P_{n_i}\Rightarrow p_{n_{i}} \Closeaddrule{i=1}{l_n}\Rightarrow q) \in \baseB\}
+	\end{align*}
+	%\end{minipage}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Properties of these mappings}
+	Let $\baseB$ be a context-free base. Then the following hold:
+	\begin{itemize}
+		\item $\illipl{\iplill{\baseB}}\baseGeq \baseB$
+		\pause
+		\item $\iplill{\illipl{\iplill{\baseB}}}= \iplill{\baseB}$
+		\pause 
+		\item For all $\baseC\baseGeq\baseB$ we have that $\iplill{\baseC}\baseGeq\iplill{\baseB}$
+		\pause
+		\item For all $\baseC\baseGeq\iplill{\baseB}$ there exists an extension $\baseX\baseGeq\baseB$ such that $\iplill{\baseX}=\baseC$
+		\pause
+		\item For all $\baseC\baseGeq\iplill{\baseB}$, it follows immediately that $\baseC = \iplill{\illipl{\baseC}}$.
+	\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Structural admissibility in a structurally contextualised base}
+	\begin{lemma}
+		Suppose $L\deriveBaseM{\iplill{\baseB}}p$ holds. Then $R\msetsum L\deriveBaseM{\iplill{\baseB}}p$ also holds for any atomic multiset $R$.
+	\end{lemma}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\begin{proof}
+		Let $R = \{r_1,\dots , r_n\}$ for some $n$. Then we have that we can effectively weaken $S$ away as follows:
+
+		\begin{minipage}{0.5\textwidth}\scriptsize
+		\begin{prooftree}
+		\AxiomC{}
+		\RightLabel{Ref}
+		\UnaryInfC{$r_1\deriveBaseM{\iplill{\baseB}}r_1$}
+		\AxiomC{}
+		\RightLabel{Ref}
+		\UnaryInfC{$r_{n-1}\deriveBaseM{\iplill{\baseB}}r_{n-1}$}
+		\AxiomC{}
+		\RightLabel{Ref}
+		\UnaryInfC{$r_n\deriveBaseM{\iplill{\baseB}}r_n$}
+		\AxiomC{$L\deriveBaseM{\iplill{\baseB}}p$}
+		\RightLabel{$\text{Wk}^{r_n}_p$}
+		\BinaryInfC{$r_n\msetsum L \deriveBaseM{\iplill{\baseB}}p$}
+		\RightLabel{$\text{Wk}^{r_{n-1}}_p$}
+		\BinaryInfC{\vdots}
+		\noLine
+		\UnaryInfC{$r_2\msetsum\dots\msetsum r_n\msetsum L \deriveBaseM{\iplill{\baseB}}p$}
+		\RightLabel{$\text{Wk}^{r_1}_p$}
+		\BinaryInfC{$R\msetsum L \deriveBaseM{\iplill{\baseB}}p$}
+		\end{prooftree}
+		\end{minipage}
+	\end{proof}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Structural admissibility in a structurally contextualised base}
+	\begin{lemma}
+		Suppose $R\msetsum R \deriveBaseM{\iplill{\baseB}}p$ holds. Then $R\deriveBaseM{\iplill{\baseB}}p$ also holds.
+	\end{lemma}
+	\pause
+	\begin{corollary}
+		For arbitrary $m\geq 1$, if $R^m\deriveBaseM{\iplill{\baseB}}p$ then $R\deriveBaseM{\iplill{\baseB}}p$.
+	\end{corollary}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\begin{proof}
+		Let $R = \{r_1, \dots , r_n\}$ for some $n$. Then we have that we can effectively contract on $R$ as follows:
+
+		\begin{minipage}{0.5\textwidth}\scriptsize
+			\begin{prooftree}
+				\AxiomC{}
+				\RightLabel{Ref}
+				\UnaryInfC{$r_1\deriveBaseM{\iplill{\baseB}}r_1$}
+				\AxiomC{}
+				\RightLabel{Ref}
+				\UnaryInfC{$r_{n-1}\deriveBaseM{\iplill{\baseB}}r_{n-1}$}
+				\AxiomC{}
+				\RightLabel{Ref}
+				\UnaryInfC{$r_n\deriveBaseM{\iplill{\baseB}}r_n$}
+				\AxiomC{$R\msetsum R\deriveBaseM{\iplill{\baseB}}p$}
+				\RightLabel{$\text{Ctn}^{r_n}_p$}
+				\BinaryInfC{$r_1\msetsum\dots\msetsum r_{n-1}\msetsum R \deriveBaseM{\iplill{\baseB}}p$}
+				\RightLabel{$\text{Ctn}^{r_{n-1}}_p$}
+				\BinaryInfC{\vdots}
+				\noLine
+				\UnaryInfC{$r_1\msetsum R \deriveBaseM{\iplill{\baseB}}p$}
+				\RightLabel{$\text{Ctn}^{r_1}_p$}
+				\BinaryInfC{$R\deriveBaseM{\iplill{\baseB}}p$}
+			\end{prooftree}
+		\end{minipage}
+	\end{proof}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Key results under this base translation}
+	\begin{itemize}
+		\item If $R\deriveBaseIPL{\baseB}p$ then $R\deriveBaseM{\iplill{\baseB}}p$.
+		\vspace{0.3cm}
+		\pause
+		\item $R\deriveBaseM{\iplill{\baseB}}p$ iff for all bases $\baseX \baseGeq \iplill{\baseB}$ where for each $r \in R$ we have $\deriveBaseM{\baseX}r$ then it follows that $\deriveBaseM{\baseX}p$.
+		\vspace{0.3cm}
+		\pause
+		\item $R\deriveBaseM{\iplill{\baseB}}p$ iff $\bang R \suppM{\iplill{\baseB}}{\emptymultiset}p$
+		\vspace{0.3cm}
+		\pause
+		\item $\suppM{\iplill{\baseB}}{R}p$ iff $\bang R\suppM{\iplill{\baseB}}{\emptymultiset}p$
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{BeS for IPL and ILL}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{BeS for IPL: Summary}
+	\begin{itemize}
+		\item $\suppIPL{\baseB}p$ iff $\deriveBaseIPL{\baseB}p$.\vspace{0.3cm}
+		%
+		\item $\suppIPL{\baseB}\varphi\land\psi$ iff $\suppIPL{\baseB}\varphi$ and $\suppIPL{\baseB}\psi$.\vspace{0.3cm}
+		%
+		\item $\suppIPL{\baseB}\varphi\lor\psi$ iff for all $\baseC\baseGeq\baseB$, $p$, if $\varphi\suppIPL{\baseC}p$ and $\psi\suppIPL{\baseC}p$ then $\suppIPL{\baseC}p$.\vspace{0.3cm}
+		%
+		\item $\suppIPL{\baseB}\varphi\to\psi$ iff $\varphi\suppIPL{\baseB}\psi$.\vspace{0.3cm}
+		%
+		\item $\suppIPL{\baseB}\bot$ iff $\suppIPL{\baseB}p$ for all $p$.\vspace{0.3cm}
+		%
+		\item $\suppIPL{\baseB}\top$ iff always.\vspace{0.3cm}
+		%
+		\item $\Gamma\suppIPL{\baseB}\varphi$ iff for all $\baseC\baseGeq\baseB$ if $\suppIPL{\baseC}\gamma$ for all $\gamma\in\Gamma$ then $\suppIPL{\baseC}\varphi$.\vspace{0.3cm}
+		%
+		\item $\Gamma\suppIPL{}\varphi$ iff $\Gamma\suppIPL{\baseB}\varphi$ for all $\baseB$.
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{BeS for ILL: Structure and the Exponential}
+	\begin{itemize}
+	\item $\suppM{\baseB}{L}p$ iff $L\deriveBaseM{\baseB}p$.\vspace{0.3cm}
+	%
+	\item $\suppM{\baseB}{L}\bang\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K,\,p,$ if $(\forall\baseD\baseGeq\baseC\, (\suppM{\baseD}{\emptymultiset}\varphi$ implies $\suppM{\baseD}{K}p)$ then $\suppM{\baseC}{L\msetsum K}p)$.\vspace{0.3cm}
+	%
+	\item $\Gamma\suppM{\baseB}{L}\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K$, if $\suppM{\baseC}{\emptymultiset}\Delta$ and $\suppM{\baseC}{K}\Theta$ where $\bang\Delta\msetsum\Theta = \Gamma$ then $\suppM{\baseC}{L\msetsum K}\varphi$.\vspace{0.3cm}
+	%
+	\item $\Gamma\suppM{}{}\varphi$ iff $\Gamma\suppM{\baseB}{\emptymultiset}\varphi$ for all $\baseB$.
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{BeS for ILL: Multiplicatives}
+	\begin{itemize}
+	\item $\suppM{\baseB}{L}\varphi\mand\psi$ iff for all $\baseC\baseGeq\baseB$, $K$ and $p$, if $\varphi\msetsum\psi\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.\vspace{0.3cm}
+	%
+	\item $\suppM{\baseB}{L}\varphi\mto\psi$ iff $\varphi\suppM{\baseB}{L}\psi$.\vspace{0.3cm}
+	%
+	\item $\suppM{\baseB}{L}\mtop$ iff for all $\baseC\baseGeq\baseB$, $K$ and $p$, if $\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.\vspace{0.3cm}
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{BeS for ILL: Additives}
+	\begin{itemize}
+	\item $\suppM{\baseB}{L}\varphi\aand\psi$ iff $\suppM{\baseB}{L}\varphi$ and $\suppM{\baseB}{L}\psi$.\vspace{0.3cm}
+	%
+	\item $\suppM{\baseB}{L}\varphi\aor\psi$ iff for all $\baseC\baseGeq\baseB$, $K$ and $p$, if $\varphi\suppM{\baseC}{K}p$ and $\psi\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.\vspace{0.3cm}
+	%
+	\item $\suppM{\baseB}{L}\abot$ iff $\suppM{\baseB}{L}p$ for all $p$.\vspace{0.3cm}
+	%
+	\item $\suppM{\baseB}{L}\top$ iff always.\vspace{0.3cm}
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{BeS for ILL: Summary}
+	\begin{itemize}
+	\item $\suppM{\baseB}{L}p$ iff $L\deriveBaseM{\baseB}p$.
+	%
+	\item $\suppM{\baseB}{L}\varphi\mand\psi$ iff $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\varphi\msetsum\psi\suppM{\baseC}{K}p$ implies $\suppM{\baseC}{L\msetsum K}p)$.
+	%
+	\item $\suppM{\baseB}{L}\varphi\mto\psi$ iff $\varphi\suppM{\baseB}{L}\psi$.
+	%
+	\item $\suppM{\baseB}{L}\mtop$ iff $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\suppM{\baseC}{K}p$ implies $\suppM{\baseC}{L\msetsum K}p)$.
+	%
+	\item $\suppM{\baseB}{L}\varphi\aand\psi$ iff $\suppM{\baseB}{L}\varphi$ and $\suppM{\baseB}{L}\psi$.
+	%
+	\item $\suppM{\baseB}{L}\varphi\aor\psi$ iff $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\varphi\suppM{\baseC}{K}p$ and $\psi\suppM{\baseC}{K}p$ implies $\suppM{\baseC}{L\msetsum K}p)$.
+	%
+	\item $\suppM{\baseB}{L}\abot$ iff $\suppM{\baseB}{L}p$ for all $p$.
+	%
+	\item $\suppM{\baseB}{L}\top$ iff always.
+	%
+	\item $\suppM{\baseB}{L}\bang\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\forall\baseD\baseGeq\baseC(\suppM{\baseD}{\emptymultiset}\varphi$ implies $\suppM{\baseD}{K}p)$ implies $\suppM{\baseC}{L\msetsum K}p)$.
+	%
+	\item $\Gamma\suppM{\baseB}{L}\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K,\, \suppM{\baseC}{\emptymultiset}\delta$ and $\suppM{\baseC}{K}\gamma$ for $\bang\delta\in\Gamma$ and $\gamma\in\Gamma$ then $\suppM{\baseC}{L\msetsum K}\varphi$.
+	%
+	\item $\Gamma\suppM{}{}\varphi$ iff $\Gamma\suppM{\baseB}{\emptymultiset}\varphi$ for all $\baseB$.
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Translating between the semantics}
+\begin{frame}{Comparing clauses}
+	%\hrule\vspace{0.15cm}
+	\begin{itemize}
+	\item[(IPL)] $\suppIPL{\baseB}p$ iff $\deriveBaseIPL{\baseB}p$.
+	%
+	\item[(ILL)] $\suppM{\baseB}{L}p$ iff $L\deriveBaseM{\baseB}p$.
+	\end{itemize}
+	\pause\vspace{0.15cm}\hrule\vspace{0.15cm}
+	\begin{itemize}
+	\item[(IPL)] $\suppIPL{\baseB}\varphi\land\psi$ iff $\suppIPL{\baseB}\varphi$ and $\suppIPL{\baseB}\psi$.
+	%
+	\item[(ILL)] $\suppM{\baseB}{L}\varphi\aand\psi$ iff $\suppM{\baseB}{L}\varphi$ and $\suppM{\baseB}{L}\psi$.
+	\end{itemize}
+	\pause\vspace{0.15cm}\hrule\vspace{0.15cm}
+	\begin{itemize}
+	\item[(IPL)] $\suppIPL{\baseB}\varphi\lor\psi$ iff for all $\baseC\baseGeq\baseB$, $p$, if $\varphi\suppIPL{\baseC}p$ and $\psi\suppIPL{\baseC}p$ then $\suppIPL{\baseC}p$.
+		%
+	\item[(ILL)] $\suppM{\baseB}{L}\varphi\aor\psi$ iff for all $\baseC\baseGeq\baseB$, $K$, $p$, if $\varphi\suppM{\baseC}{K}p$ and $\psi\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.
+	\end{itemize}
+	\pause\vspace{0.15cm}\hrule\vspace{0.15cm}
+	\begin{itemize}
+	\item[(IPL)] $\suppIPL{\baseB}\varphi\to\psi$ iff $\varphi\suppIPL{\baseB}\psi$.
+	%
+	\item[(ILL)] $\suppM{\baseB}{L}\varphi\mto\psi$ iff $\varphi\suppM{\baseB}{L}\psi$.
+	\end{itemize}
+	\pause\vspace{0.15cm}\hrule\vspace{0.15cm}
+	\begin{itemize}
+	\item[(IPL)] $\suppIPL{\baseB}\bot$ iff $\suppIPL{\baseB}p$ for all $p$.
+	%
+	\item[(ILL)] $\suppM{\baseB}{L}\abot$ iff $\suppM{\baseB}{L}p$ for all $p$.
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Translation of formulas}
+	We seem to have a corrspondence between the clauses for the following pairs of connectives:
+	\begin{center}
+		\begin{itemize}
+			\item $\land$ and $\aand$
+			\item $\lor$ and $\aor$
+			\item $\to$ and $\mto$
+			\item $\bot$ and $\abot$
+		\end{itemize}
+	\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Translation of formulas}
+	One possible translation of formulas between IPL and ILL is:
+	\begin{center}
+	\begin{itemize}
+        \item $\llbracket p\rrbracket \equiv p$, where $p$ is an atom.
+        %
+        \item $\llbracket\varphi\land\psi\rrbracket \equiv \llbracket \varphi \rrbracket \aand \llbracket \psi \rrbracket$ 
+        %
+        \item $\llbracket\varphi \lor\psi\rrbracket \equiv \bang\llbracket \varphi \rrbracket \aor \bang\llbracket \psi \rrbracket$ 
+        %
+        \item $\llbracket\varphi \to \psi\rrbracket \equiv \bang\llbracket \varphi \rrbracket \mto \llbracket \psi \rrbracket$
+        %
+        \item $\llbracket\bot\rrbracket \equiv \abot$
+	\end{itemize}
+	\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Translation of formulas}
+	%\hrule\vspace{0.15cm}
+	\begin{itemize}
+	\item[(IPL)] $\suppIPL{\baseB}p$ iff $\deriveBaseIPL{\baseB}p$.
+	%
+	\item[(ILL)] $\suppM{\baseB}{L}p$ iff $L\deriveBaseM{\baseB}p$.
+	\end{itemize}
+	\vspace{0.15cm}\hrule\vspace{0.15cm}
+	\begin{itemize}
+	\item[(IPL)] $\suppIPL{\baseB}\varphi\land\psi$ iff $\suppIPL{\baseB}\varphi$ and $\suppIPL{\baseB}\psi$.
+	%
+	\item[(ILL)] $\suppM{\baseB}{L}\varphi\aand\psi$ iff $\suppM{\baseB}{L}\varphi$ and $\suppM{\baseB}{L}\psi$.
+	\end{itemize}
+	\vspace{0.15cm}\hrule\vspace{0.15cm}
+	\begin{itemize}
+	\item[(IPL)] $\suppIPL{\baseB}\varphi\lor\psi$ iff for all $\baseC\baseGeq\baseB$, $p$, if $\varphi\suppIPL{\baseC}p$ and $\psi\suppIPL{\baseC}p$ then $\suppIPL{\baseC}p$.
+	%
+	\item[(ILL)] $\suppM{\baseB}{L}\varphi\aor\psi$ iff for all $\baseC\baseGeq\baseB$, $K$, $p$, if $\varphi\suppM{\baseC}{K}p$ and $\psi\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.
+	\end{itemize}
+	\vspace{0.15cm}\hrule\vspace{0.15cm}
+	\begin{itemize}
+	\item[(IPL)] $\suppIPL{\baseB}\varphi\to\psi$ iff $\varphi\suppIPL{\baseB}\psi$.
+	%
+	\item[(ILL)] $\suppM{\baseB}{L}\varphi\mto\psi$ iff $\varphi\suppM{\baseB}{L}\psi$.
+	\end{itemize}
+	\vspace{0.15cm}\hrule\vspace{0.15cm}
+	\begin{itemize}
+	\item[(IPL)] $\suppIPL{\baseB}\bot$ iff $\suppIPL{\baseB}p$ for all $p$.
+	%
+	\item[(ILL)] $\suppM{\baseB}{L}\abot$ iff $\suppM{\baseB}{L}p$ for all $p$.
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Translation of formulas}
+	One possible translation of formulas between IPL and ILL is:
+	\begin{center}
+	\begin{itemize}
+        \item $\llbracket p\rrbracket \equiv p$, where $p$ is an atom.
+        %
+        \item $\llbracket\varphi\land\psi\rrbracket \equiv \llbracket \varphi \rrbracket \aand \llbracket \psi \rrbracket$ 
+        %
+        \item $\llbracket\varphi \lor\psi\rrbracket \equiv \bang\llbracket \varphi \rrbracket \aor \bang\llbracket \psi \rrbracket$ 
+        %
+        \item $\llbracket\varphi \to \psi\rrbracket \equiv \bang\llbracket \varphi \rrbracket \mto \llbracket \psi \rrbracket$
+        %
+        \item $\llbracket\bot\rrbracket \equiv \abot$
+	\end{itemize}
+	\end{center}
+	\pause
+	Sequents are translated as follows:
+	\begin{itemize}
+		\item If $\Gamma\vdash_{\text{IPL}}\varphi$ then $\bang\llbracket\Gamma\rrbracket\vdash_{\text{ILL}}\llbracket\varphi\rrbracket$
+	\end{itemize}
+	\pause Semantically we should therefore have:
+	\begin{itemize}
+		\item If $\Gamma\suppIPL{}\varphi$ then $\bang\llbracket\Gamma\rrbracket\suppM{}{}\llbracket\varphi\rrbracket$
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Immediate correspondence between bases}
+\begin{align*}
+\Gamma &\vdash_{\text{IPL}}\varphi &\text{ iff } \Gamma &\suppIPL{}\varphi &\text{ iff } &\text{ for all } \baseB\,, p\,, \text{ if } \suppIPL{\baseB}\gamma \text { then } \suppIPL{\baseB}\varphi \\ \vspace*{0.2cm}
+\bang\llbracket\Gamma\rrbracket &\vdash_{\text{ILL}}\llbracket\varphi\rrbracket &\text{ iff } \bang\llbracket\Gamma\rrbracket &\suppM{}{}\llbracket\varphi\rrbracket &\text{ iff } &\text{ for all } \baseC\,, p\,, \text{ if } \suppM{\baseC}{\emptymultiset}\llbracket\gamma\rrbracket \text{ then }\suppM{\baseC}{\emptymultiset}\llbracket\varphi\rrbracket	
+\end{align*}
+\pause
+Since we have that $\Gamma\vdash_{\text{IPL}}\varphi$ implies $\bang\llbracket\Gamma\rrbracket\vdash_{\text{ILL}}\llbracket\varphi\rrbracket$, then we have a mapping between bases $\baseB$ and bases $\baseC$.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\begin{center}
+		But what about if we have $\Gamma\suppIPL{\baseB}\varphi$?
+		\vspace{1cm}
+		\pause
+		\begin{theorem}
+			If $\Gamma\suppIPL{\baseB}\varphi$ then $\bang\llbracket\Gamma\rrbracket\suppM{\iplill{\baseB}}{\emptymultiset}\llbracket\varphi\rrbracket$
+		\end{theorem}
+	\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Thank you!}
+	\begin{center}
+		\textbf{Thank you for listening! \\ 
+		Comments? Observations? Please ask and/or feel free to \\
+		email me at y.buzoku@ucl.ac.uk}
+	\end{center}
+%\begin{figure}
+%	\begin{center}
+%	  \includegraphics[width=\textwidth]{dosthanks2.png}
+%	  \caption{Thank you from DOS!\,:D}
+%	\end{center}
+%  \end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]
+	\frametitle{References}
+	\nocite{*}
+	\bibliographystyle{amsalpha}
+	\bibliography{./refs/refs.bib}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
