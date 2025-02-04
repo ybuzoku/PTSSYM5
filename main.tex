@@ -464,6 +464,8 @@ The relation of derivability in a contextual base $\baseB$, is defined as so:
 		\vspace{0.3cm}
 		\pause
 		\item $\suppM{\iplill{\baseB}}{R}p$ iff $\bang R\suppM{\iplill{\baseB}}{\emptymultiset}p$
+		\pause
+		\item If $R\suppIPL{\baseB}p$ then $\bang R\suppM{\iplill{\baseB}}{\emptymultiset}p$
 	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -472,81 +474,81 @@ The relation of derivability in a contextual base $\baseB$, is defined as so:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{BeS for IPL: Summary}
 	\begin{itemize}
-		\item $\suppIPL{\baseB}p$ iff $\deriveBaseIPL{\baseB}p$.\vspace{0.3cm}
+		\item[(At)] $\suppIPL{\baseB}p$ iff $\deriveBaseIPL{\baseB}p$.\vspace{0.3cm}
 		%
-		\item $\suppIPL{\baseB}\varphi\land\psi$ iff $\suppIPL{\baseB}\varphi$ and $\suppIPL{\baseB}\psi$.\vspace{0.3cm}
+		\item[($\land$)] $\suppIPL{\baseB}\varphi\land\psi$ iff $\suppIPL{\baseB}\varphi$ and $\suppIPL{\baseB}\psi$.\vspace{0.3cm}
 		%
-		\item $\suppIPL{\baseB}\varphi\lor\psi$ iff for all $\baseC\baseGeq\baseB$, $p$, if $\varphi\suppIPL{\baseC}p$ and $\psi\suppIPL{\baseC}p$ then $\suppIPL{\baseC}p$.\vspace{0.3cm}
+		\item[($\lor$)] $\suppIPL{\baseB}\varphi\lor\psi$ iff for all $\baseC\baseGeq\baseB$, $p$, if $\varphi\suppIPL{\baseC}p$ and $\psi\suppIPL{\baseC}p$ then $\suppIPL{\baseC}p$.\vspace{0.3cm}
 		%
-		\item $\suppIPL{\baseB}\varphi\to\psi$ iff $\varphi\suppIPL{\baseB}\psi$.\vspace{0.3cm}
+		\item[($\to$)] $\suppIPL{\baseB}\varphi\to\psi$ iff $\varphi\suppIPL{\baseB}\psi$.\vspace{0.3cm}
 		%
-		\item $\suppIPL{\baseB}\bot$ iff $\suppIPL{\baseB}p$ for all $p$.\vspace{0.3cm}
+		\item[($\bot$)] $\suppIPL{\baseB}\bot$ iff $\suppIPL{\baseB}p$ for all $p$.\vspace{0.3cm}
 		%
-		\item $\suppIPL{\baseB}\top$ iff always.\vspace{0.3cm}
+		\item[($\top$)] $\suppIPL{\baseB}\top$ iff always.\vspace{0.3cm}
 		%
-		\item $\Gamma\suppIPL{\baseB}\varphi$ iff for all $\baseC\baseGeq\baseB$ if $\suppIPL{\baseC}\gamma$ for all $\gamma\in\Gamma$ then $\suppIPL{\baseC}\varphi$.\vspace{0.3cm}
+		\item[(Inf)] $\Gamma\suppIPL{\baseB}\varphi$ iff for all $\baseC\baseGeq\baseB$ if $\suppIPL{\baseC}\gamma$ for all $\gamma\in\Gamma$ then $\suppIPL{\baseC}\varphi$.\vspace{0.3cm}
 		%
-		\item $\Gamma\suppIPL{}\varphi$ iff $\Gamma\suppIPL{\baseB}\varphi$ for all $\baseB$.
+		\item[(Val)] $\Gamma\suppIPL{}\varphi$ iff $\Gamma\suppIPL{\baseB}\varphi$ for all $\baseB$.
 	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{BeS for ILL: Structure and the Exponential}
 	\begin{itemize}
-	\item $\suppM{\baseB}{L}p$ iff $L\deriveBaseM{\baseB}p$.\vspace{0.3cm}
+	\item[(At)] $\suppM{\baseB}{L}p$ iff $L\deriveBaseM{\baseB}p$.\vspace{0.3cm}
 	%
-	\item $\suppM{\baseB}{L}\bang\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K,\,p,$ if $(\forall\baseD\baseGeq\baseC\, (\suppM{\baseD}{\emptymultiset}\varphi$ implies $\suppM{\baseD}{K}p)$ then $\suppM{\baseC}{L\msetsum K}p)$.\vspace{0.3cm}
+	\item[($\bang$)] $\suppM{\baseB}{L}\bang\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K,\,p,$ if $(\forall\baseD\baseGeq\baseC\, (\suppM{\baseD}{\emptymultiset}\varphi$ implies $\suppM{\baseD}{K}p)$ then $\suppM{\baseC}{L\msetsum K}p)$.\vspace{0.3cm}
 	%
-	\item $\Gamma\suppM{\baseB}{L}\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K$, if $\suppM{\baseC}{\emptymultiset}\Delta$ and $\suppM{\baseC}{K}\Theta$ where $\bang\Delta\msetsum\Theta = \Gamma$ then $\suppM{\baseC}{L\msetsum K}\varphi$.\vspace{0.3cm}
+	\item[(Inf)] $\Gamma\suppM{\baseB}{L}\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K$, if $\suppM{\baseC}{\emptymultiset}\Delta$ and $\suppM{\baseC}{K}\Theta$ where $\bang\Delta\msetsum\Theta = \Gamma$ then $\suppM{\baseC}{L\msetsum K}\varphi$.\vspace{0.3cm}
 	%
-	\item $\Gamma\suppM{}{}\varphi$ iff $\Gamma\suppM{\baseB}{\emptymultiset}\varphi$ for all $\baseB$.
+	\item[(Val)] $\Gamma\suppM{}{}\varphi$ iff $\Gamma\suppM{\baseB}{\emptymultiset}\varphi$ for all $\baseB$.
 	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{BeS for ILL: Multiplicatives}
 	\begin{itemize}
-	\item $\suppM{\baseB}{L}\varphi\mand\psi$ iff for all $\baseC\baseGeq\baseB$, $K$ and $p$, if $\varphi\msetsum\psi\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.\vspace{0.3cm}
+	\item[($\mand$)] $\suppM{\baseB}{L}\varphi\mand\psi$ iff for all $\baseC\baseGeq\baseB$, $K$ and $p$, if $\varphi\msetsum\psi\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.\vspace{0.3cm}
 	%
-	\item $\suppM{\baseB}{L}\varphi\mto\psi$ iff $\varphi\suppM{\baseB}{L}\psi$.\vspace{0.3cm}
+	\item[($\mto$)] $\suppM{\baseB}{L}\varphi\mto\psi$ iff $\varphi\suppM{\baseB}{L}\psi$.\vspace{0.3cm}
 	%
-	\item $\suppM{\baseB}{L}\mtop$ iff for all $\baseC\baseGeq\baseB$, $K$ and $p$, if $\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.\vspace{0.3cm}
+	\item[($\mtop$)] $\suppM{\baseB}{L}\mtop$ iff for all $\baseC\baseGeq\baseB$, $K$ and $p$, if $\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.\vspace{0.3cm}
 	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{BeS for ILL: Additives}
 	\begin{itemize}
-	\item $\suppM{\baseB}{L}\varphi\aand\psi$ iff $\suppM{\baseB}{L}\varphi$ and $\suppM{\baseB}{L}\psi$.\vspace{0.3cm}
+	\item[($\aand$)] $\suppM{\baseB}{L}\varphi\aand\psi$ iff $\suppM{\baseB}{L}\varphi$ and $\suppM{\baseB}{L}\psi$.\vspace{0.3cm}
 	%
-	\item $\suppM{\baseB}{L}\varphi\aor\psi$ iff for all $\baseC\baseGeq\baseB$, $K$ and $p$, if $\varphi\suppM{\baseC}{K}p$ and $\psi\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.\vspace{0.3cm}
+	\item[($\aor$)] $\suppM{\baseB}{L}\varphi\aor\psi$ iff for all $\baseC\baseGeq\baseB$, $K$ and $p$, if $\varphi\suppM{\baseC}{K}p$ and $\psi\suppM{\baseC}{K}p$ then $\suppM{\baseC}{L\msetsum K}p$.\vspace{0.3cm}
 	%
-	\item $\suppM{\baseB}{L}\abot$ iff $\suppM{\baseB}{L}p$ for all $p$.\vspace{0.3cm}
+	\item[($\abot$)] $\suppM{\baseB}{L}\abot$ iff $\suppM{\baseB}{L}p$ for all $p$.\vspace{0.3cm}
 	%
-	\item $\suppM{\baseB}{L}\top$ iff always.\vspace{0.3cm}
+	\item[($\top$)] $\suppM{\baseB}{L}\top$ iff always.\vspace{0.3cm}
 	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{BeS for ILL: Summary}
 	\begin{itemize}
-	\item $\suppM{\baseB}{L}p$ iff $L\deriveBaseM{\baseB}p$.
+	\item[(At)] $\suppM{\baseB}{L}p$ iff $L\deriveBaseM{\baseB}p$.
 	%
-	\item $\suppM{\baseB}{L}\varphi\mand\psi$ iff $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\varphi\msetsum\psi\suppM{\baseC}{K}p$ implies $\suppM{\baseC}{L\msetsum K}p)$.
+	\item[($\mand$)] $\suppM{\baseB}{L}\varphi\mand\psi$ iff $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\varphi\msetsum\psi\suppM{\baseC}{K}p$ implies $\suppM{\baseC}{L\msetsum K}p)$.
 	%
-	\item $\suppM{\baseB}{L}\varphi\mto\psi$ iff $\varphi\suppM{\baseB}{L}\psi$.
+	\item[($\mto$)] $\suppM{\baseB}{L}\varphi\mto\psi$ iff $\varphi\suppM{\baseB}{L}\psi$.
 	%
-	\item $\suppM{\baseB}{L}\mtop$ iff $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\suppM{\baseC}{K}p$ implies $\suppM{\baseC}{L\msetsum K}p)$.
+	\item[($\mtop$)] $\suppM{\baseB}{L}\mtop$ iff $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\suppM{\baseC}{K}p$ implies $\suppM{\baseC}{L\msetsum K}p)$.
 	%
-	\item $\suppM{\baseB}{L}\varphi\aand\psi$ iff $\suppM{\baseB}{L}\varphi$ and $\suppM{\baseB}{L}\psi$.
+	\item[($\aand$)] $\suppM{\baseB}{L}\varphi\aand\psi$ iff $\suppM{\baseB}{L}\varphi$ and $\suppM{\baseB}{L}\psi$.
 	%
-	\item $\suppM{\baseB}{L}\varphi\aor\psi$ iff $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\varphi\suppM{\baseC}{K}p$ and $\psi\suppM{\baseC}{K}p$ implies $\suppM{\baseC}{L\msetsum K}p)$.
+	\item[($\aor$)] $\suppM{\baseB}{L}\varphi\aor\psi$ iff $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\varphi\suppM{\baseC}{K}p$ and $\psi\suppM{\baseC}{K}p$ implies $\suppM{\baseC}{L\msetsum K}p)$.
 	%
-	\item $\suppM{\baseB}{L}\abot$ iff $\suppM{\baseB}{L}p$ for all $p$.
+	\item[($\abot$)] $\suppM{\baseB}{L}\abot$ iff $\suppM{\baseB}{L}p$ for all $p$.
 	%
-	\item $\suppM{\baseB}{L}\top$ iff always.
+	\item[($\top$)] $\suppM{\baseB}{L}\top$ iff always.
 	%
-	\item $\suppM{\baseB}{L}\bang\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\forall\baseD\baseGeq\baseC(\suppM{\baseD}{\emptymultiset}\varphi$ implies $\suppM{\baseD}{K}p)$ implies $\suppM{\baseC}{L\msetsum K}p)$.
+	\item[($\bang$)] $\suppM{\baseB}{L}\bang\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K,\,p\, (\forall\baseD\baseGeq\baseC(\suppM{\baseD}{\emptymultiset}\varphi$ implies $\suppM{\baseD}{K}p)$ implies $\suppM{\baseC}{L\msetsum K}p)$.
 	%
-	\item $\Gamma\suppM{\baseB}{L}\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K,\, \suppM{\baseC}{\emptymultiset}\delta$ and $\suppM{\baseC}{K}\gamma$ for $\bang\delta\in\Gamma$ and $\gamma\in\Gamma$ then $\suppM{\baseC}{L\msetsum K}\varphi$.
+	\item[(Inf)] $\Gamma\suppM{\baseB}{L}\varphi$ iff \newline $\forall\baseC\baseGeq\baseB,\, K$, if $\suppM{\baseC}{\emptymultiset}\Delta$ and $\suppM{\baseC}{K}\Theta$ where $\bang\Delta\msetsum\Theta = \Gamma$ then $\suppM{\baseC}{L\msetsum K}\varphi$
 	%
-	\item $\Gamma\suppM{}{}\varphi$ iff $\Gamma\suppM{\baseB}{\emptymultiset}\varphi$ for all $\baseB$.
+	\item[(Val)] $\Gamma\suppM{}{}\varphi$ iff $\Gamma\suppM{\baseB}{\emptymultiset}\varphi$ for all $\baseB$.
 	\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -598,7 +600,7 @@ The relation of derivability in a contextual base $\baseB$, is defined as so:
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Translation of formulas}
-	One possible translation of formulas between IPL and ILL is:
+	One possible translation of formulas from IPL to ILL is:
 	\begin{center}
 	\begin{itemize}
         \item $\llbracket p\rrbracket \equiv p$, where $p$ is an atom.
@@ -648,7 +650,7 @@ The relation of derivability in a contextual base $\baseB$, is defined as so:
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Translation of formulas}
-	One possible translation of formulas between IPL and ILL is:
+	One possible translation of formulas from IPL to ILL is:
 	\begin{center}
 	\begin{itemize}
         \item $\llbracket p\rrbracket \equiv p$, where $p$ is an atom.
@@ -675,7 +677,7 @@ The relation of derivability in a contextual base $\baseB$, is defined as so:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Immediate correspondence between bases}
 \begin{align*}
-\Gamma &\vdash_{\text{IPL}}\varphi &\text{ iff } \Gamma &\suppIPL{}\varphi &\text{ iff } &\text{ for all } \baseB\,, p\,, \text{ if } \suppIPL{\baseB}\gamma \text { then } \suppIPL{\baseB}\varphi \\ \vspace*{0.2cm}
+\Gamma &\vdash_{\text{IPL}}\varphi &\text{ iff } \Gamma &\suppIPL{}\varphi &\text{ iff } &\text{ for all } \baseB\,, p\,, \text{ if } \suppIPL{\baseB}\gamma \text { then } \suppIPL{\baseB}\varphi \\ \vspace*{0.5cm}
 \bang\llbracket\Gamma\rrbracket &\vdash_{\text{ILL}}\llbracket\varphi\rrbracket &\text{ iff } \bang\llbracket\Gamma\rrbracket &\suppM{}{}\llbracket\varphi\rrbracket &\text{ iff } &\text{ for all } \baseC\,, p\,, \text{ if } \suppM{\baseC}{\emptymultiset}\llbracket\gamma\rrbracket \text{ then }\suppM{\baseC}{\emptymultiset}\llbracket\varphi\rrbracket	
 \end{align*}
 \pause
@@ -685,15 +687,18 @@ Since we have that $\Gamma\vdash_{\text{IPL}}\varphi$ implies $\bang\llbracket\G
 \begin{frame}
 	\begin{center}
 		But what about if we have $\Gamma\suppIPL{\baseB}\varphi$?
+	\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\begin{center}
+		But what about if we have $\Gamma\suppIPL{\baseB}\varphi$?
 		\vspace{1cm}
-		\pause
 		\begin{theorem}
 			If $\Gamma\suppIPL{\baseB}\varphi$ then $\bang\llbracket\Gamma\rrbracket\suppM{\iplill{\baseB}}{\emptymultiset}\llbracket\varphi\rrbracket$
 		\end{theorem}
 	\end{center}
 \end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Thank you!}
 	\begin{center}
